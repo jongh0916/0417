@@ -1,0 +1,46 @@
+---
+#news svc
+apiVersion: v1
+kind: Service
+metadata:
+  name: aws9-svc-news
+spec:
+  selector:
+    web: news-svc
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+---
+#news deploy
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: news-deploy
+spec:
+  selector:
+    matchLabels:
+      web: news-svc
+  template:
+    metadata: 
+      labels:
+        web: news-svc
+    spec:
+      containers:
+      - name: newsctn
+        image: shjtest/aws:green
+        ports:
+          - containerPort: 80   
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: shop-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: dev1-sc
