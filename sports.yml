@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
       - name: newsctn
-        image: shjtest/aws:green
+        image: hub.aws9.pri/aws9/news:1.0
         ports:
           - containerPort: 80   
 ---
